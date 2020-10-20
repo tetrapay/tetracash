@@ -1,2 +1,2 @@
 # ABC 
-a cross chain project based on substrate
+a cross chain project based on substrat.e

@@ -96,4 +96,9 @@ pub type BlockId = generic::BlockId<Block>;
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, Debug))]
 pub struct UncheckedExtrinsic(#[cfg_attr(feature = "std", serde(with="bytes"))] pub Vec<u8>);
 
-impl Extrinsic for UncheckedExtrinsic {}
+impl Extrinsic for UncheckedExtrinsic {
+    type Call = ();
+    fn is_signed(&self) -> Option<bool> {
+		None
+	}
+}

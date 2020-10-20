@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-service"
+name = "abc-service"
 version = "0.5.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -11,12 +11,12 @@ log = "0.4.6"
 slog = "^2"
 tokio = "0.1.7"
 hex-literal = "0.2"
-av_store = { package = "polkadot-availability-store", path = "../availability-store" }
-consensus = { package = "polkadot-validation", path = "../validation" }
-polkadot-primitives = { path = "../primitives" }
-polkadot-runtime = { path = "../runtime" }
-polkadot-executor = { path = "../executor" }
-polkadot-network = { path = "../network"  }
+av_store = { package = "abc-availability-store", path = "../availability-store" }
+consensus = { package = "abc-validation", path = "../validation" }
+abc-primitives = { path = "../primitives" }
+abc-runtime = { path = "../runtime" }
+abc-executor = { path = "../executor" }
+abc-network = { path = "../network"  }
 sr-io = { git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }
 sr-primitives = { git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }
 primitives = { package = "substrate-primitives", git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }

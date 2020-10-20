@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-validation"
+name = "abc-validation"
 version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -13,11 +13,11 @@ derive_more = "0.14.0"
 log = "0.4.6"
 exit-future = "0.1"
 parity-codec = "4.1"
-extrinsic_store = { package = "polkadot-availability-store", path = "../availability-store" }
-parachain = { package = "polkadot-parachain", path = "../parachain" }
-polkadot-primitives = { path = "../primitives" }
-polkadot-runtime = { path = "../runtime" }
-table = { package = "polkadot-statement-table", path = "../statement-table" }
+extrinsic_store = { package = "abc-availability-store", path = "../availability-store" }
+parachain = { package = "abc-parachain", path = "../parachain" }
+abc-primitives = { path = "../primitives" }
+abc-runtime = { path = "../runtime" }
+table = { package = "abc-statement-table", path = "../statement-table" }
 aura = { package = "substrate-consensus-aura", git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }
 aura_primitives = { package = "substrate-consensus-aura-primitives", git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }
 grandpa = { package = "substrate-finality-grandpa", git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }

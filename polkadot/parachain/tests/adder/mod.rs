@@ -16,7 +16,7 @@
 
 //! Basic parachain that adds a number as part of its state.
 
-use polkadot_parachain as parachain;
+use abc_parachain as parachain;
 
 use crate::parachain::{IncomingMessage, ValidationParams};
 use crate::DummyExt;

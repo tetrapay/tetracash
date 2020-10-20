@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-network"
+name = "abc-network"
 version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 description = "Polkadot-specific networking protocol"
@@ -8,9 +8,9 @@ edition = "2018"
 [dependencies]
 arrayvec = "0.4"
 parking_lot = "0.7.1"
-av_store = { package = "polkadot-availability-store", path = "../availability-store" }
-polkadot-validation = { path = "../validation" }
-polkadot-primitives = { path = "../primitives" }
+av_store = { package = "abc-availability-store", path = "../availability-store" }
+abc-validation = { path = "../validation" }
+abc-primitives = { path = "../primitives" }
 parity-codec = { version = "4.1", features = ["derive"] }
 substrate-network = { git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }
 substrate-primitives = { git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }

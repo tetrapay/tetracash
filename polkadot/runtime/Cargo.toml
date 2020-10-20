@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-runtime"
+name = "abc-runtime"
 version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
@@ -12,7 +12,7 @@ log = { version = "0.3", optional = true }
 serde = { version = "1.0", default-features = false }
 serde_derive = { version = "1.0", optional = true }
 safe-mix = { version = "1.0", default-features = false}
-primitives = { package = "polkadot-primitives", path = "../primitives", default-features = false }
+primitives = { package = "abc-primitives", path = "../primitives", default-features = false }
 parity-codec = { version = "4.1", default-features = false, features = ["derive"] }
 substrate-serializer = { git = "https://github.com/paritytech/substrate", default-features = false, branch = "polkadot-master" }
 rstd = { package = "sr-std", git = "https://github.com/paritytech/substrate", default-features = false, branch = "polkadot-master" }

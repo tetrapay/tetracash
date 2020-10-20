@@ -1,12 +1,12 @@
 [package]
-name = "polkadot-availability-store"
+name = "abc-availability-store"
 description = "Persistent database for parachain data"
 version = "0.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2018"
 
 [dependencies]
-polkadot-primitives = { path = "../primitives" }
+abc-primitives = { path = "../primitives" }
 parking_lot = "0.7.1"
 log = "0.4.6"
 parity-codec = "4.1"

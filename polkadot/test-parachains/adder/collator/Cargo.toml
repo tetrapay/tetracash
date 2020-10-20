@@ -6,9 +6,9 @@ edition = "2018"
 
 [dependencies]
 adder = { path = ".." }
-parachain = { package = "polkadot-parachain", path = "../../../parachain" }
-collator = { package = "polkadot-collator", path = "../../../collator" }
-primitives = { package = "polkadot-primitives", path = "../../../primitives" }
+parachain = { package = "abc-parachain", path = "../../../parachain" }
+collator = { package = "abc-collator", path = "../../../collator" }
+primitives = { package = "abc-primitives", path = "../../../primitives" }
 substrate-primitives = { git = "https://github.com/paritytech/substrate", branch = "polkadot-master" }
 parking_lot = "0.7.1"
 ctrlc = { version = "3.0", features = ["termination"] }

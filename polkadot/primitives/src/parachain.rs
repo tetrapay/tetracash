@@ -28,7 +28,7 @@ use serde::{Serialize, Deserialize};
 use primitives::bytes;
 use primitives::ed25519;
 
-pub use polkadot_parachain::{
+pub use abc_parachain::{
 	Id, AccountIdConversion, ParachainDispatchOrigin, UpwardMessage,
 };
 

@@ -1,16 +1,16 @@
 [[bin]]
-name = "polkadot"
+name = "abc"
 path = "src/main.rs"
 
 [package]
-name = "polkadot"
+name = "abc"
 version = "0.5.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 build = "build.rs"
 edition = "2018"
 
 [dependencies]
-cli = { package = "polkadot-cli", path = "cli" }
+cli = { package = "abc-cli", path = "cli" }
 futures = "0.1"
 ctrlc = { version = "3.0", features = ["termination"] }
 

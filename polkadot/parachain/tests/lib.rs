@@ -17,7 +17,7 @@
 mod adder;
 mod wasm_executor;
 
-use polkadot_parachain as parachain;
+use abc_parachain as parachain;
 use crate::parachain::{
 	MessageRef, UpwardMessageRef,
 	wasm_executor::{Externalities, ExternalitiesError, run_worker},

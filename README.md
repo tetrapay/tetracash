@@ -1,2 +1,2 @@
 # Tetracash
-Tetra currency to act as an algorithmic stable currency.
+Tetra algorithmic stable currency based on substrate.

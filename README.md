@@ -1,2 +1,2 @@
-# ABC 
-a cross chain project based on substrat.e
+# Tetracash
+Tetra currency to act as an algorithmic stable currency.

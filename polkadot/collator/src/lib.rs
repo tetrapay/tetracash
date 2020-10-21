@@ -54,27 +54,27 @@ use futures03::{TryStreamExt as _, StreamExt as _};
 use log::{info, warn};
 use client::BlockchainEvents;
 use primitives::{ed25519, Pair};
-use polkadot_primitives::{
+use abc_primitives::{
 	BlockId, SessionKey, Hash, Block,
 	parachain::{
 		self, BlockData, DutyRoster, HeadData, ConsolidatedIngress, Message, Id as ParaId, Extrinsic,
 		PoVBlock, Status as ParachainStatus,
 	}
 };
-use polkadot_cli::{
+use abc_cli::{
 	Worker, IntoExit, ProvideRuntimeApi, TaskExecutor, PolkadotService, CustomConfiguration,
 	ParachainHost,
 };
-use polkadot_network::validation::{SessionParams, ValidationNetwork};
-use polkadot_network::NetworkService;
+use abc_network::validation::{SessionParams, ValidationNetwork};
+use abc_network::NetworkService;
 use tokio::timer::Timeout;
 use consensus_common::SelectChain;
 use aura::AuraApi;
 
-pub use polkadot_cli::VersionInfo;
-pub use polkadot_network::validation::Incoming;
-pub use polkadot_validation::SignedStatement;
-pub use polkadot_primitives::parachain::CollatorId;
+pub use abc_cli::VersionInfo;
+pub use abc_network::validation::Incoming;
+pub use abc_validation::SignedStatement;
+pub use abc_primitives::parachain::CollatorId;
 pub use substrate_network::PeerId;
 
 const COLLATION_TIMEOUT: Duration = Duration::from_secs(30);
@@ -203,7 +203,7 @@ pub fn collate<'a, R, P>(
 			let block_data_hash = block_data.hash();
 			let signature = key.sign(block_data_hash.as_ref()).into();
 			let egress_queue_roots =
-				polkadot_validation::egress_roots(&mut extrinsic.outgoing_messages);
+				abc_validation::egress_roots(&mut extrinsic.outgoing_messages);
 
 			let receipt = parachain::CandidateReceipt {
 				parachain_index: local_id,
@@ -302,11 +302,11 @@ impl<P, E> Worker for CollationNode<P, E> where
 			return Box::new(future::err(()));
 		};
 
-		let message_validator = polkadot_network::gossip::register_validator(
+		let message_validator = abc_network::gossip::register_validator(
 			network.clone(),
 			move |block_hash: &Hash| {
 				use client::BlockStatus;
-				use polkadot_network::gossip::Known;
+				use abc_network::gossip::Known;
 
 				match known_oracle.block_status(&BlockId::hash(*block_hash)) {
 					Err(_) | Ok(BlockStatus::Unknown) | Ok(BlockStatus::Queued) => None,
@@ -415,7 +415,7 @@ impl<P, E> Worker for CollationNode<P, E> where
 }
 
 fn compute_targets(para_id: ParaId, session_keys: &[SessionKey], roster: DutyRoster) -> HashSet<SessionKey> {
-	use polkadot_primitives::parachain::Chain;
+	use abc_primitives::parachain::Chain;
 
 	roster.validator_duty.iter().enumerate()
 		.filter(|&(_, c)| c == &Chain::Parachain(para_id))
@@ -435,7 +435,7 @@ pub fn run_collator<P, E>(
 	exit: E,
 	key: Arc<ed25519::Pair>,
 	version: VersionInfo,
-) -> polkadot_cli::error::Result<()> where
+) -> abc_cli::error::Result<()> where
 	P: BuildParachainContext + Send + 'static,
 	P::ParachainContext: Send + 'static,
 	<<P::ParachainContext as ParachainContext>::ProduceCandidate as IntoFuture>::Future: Send + 'static,
@@ -443,14 +443,14 @@ pub fn run_collator<P, E>(
 	E::Future: Send + Clone + Sync + 'static,
 {
 	let node_logic = CollationNode { build_parachain_context, exit: exit.into_future(), para_id, key };
-	polkadot_cli::run(node_logic, version)
+	abc_cli::run(node_logic, version)
 }
 
 #[cfg(test)]
 mod tests {
 	use std::collections::HashMap;
-	use polkadot_primitives::parachain::{OutgoingMessage, FeeSchedule};
-	use keyring::AuthorityKeyring;
+	use abc_primitives::parachain::{OutgoingMessage, FeeSchedule};
+	use keyring::Ed25519Keyring;
 	use super::*;
 
 	#[derive(Default, Clone)]
@@ -514,11 +514,11 @@ mod tests {
 			Message(b"buy_1_chili_con_carne_here_is_my_cash".to_vec()),
 		];
 
-		let root_a = ::polkadot_validation::message_queue_root(
+		let root_a = ::abc_validation::message_queue_root(
 			messages_from_a.iter().map(|msg| &msg.0)
 		);
 
-		let root_b = ::polkadot_validation::message_queue_root(
+		let root_b = ::abc_validation::message_queue_root(
 			messages_from_b.iter().map(|msg| &msg.0)
 		);
 
@@ -540,7 +540,7 @@ mod tests {
 			},
 			context.clone(),
 			DummyParachainContext,
-			AuthorityKeyring::Alice.pair().into(),
+			Ed25519Keyring::Alice.pair().into(),
 		).wait().unwrap();
 
 		// ascending order by root.

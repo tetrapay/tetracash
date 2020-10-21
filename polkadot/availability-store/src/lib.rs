@@ -19,8 +19,8 @@
 use parity_codec::{Encode, Decode};
 use kvdb::{KeyValueDB, DBTransaction};
 use kvdb_rocksdb::{Database, DatabaseConfig};
-use polkadot_primitives::Hash;
-use polkadot_primitives::parachain::{Id as ParaId, BlockData, Extrinsic};
+use abc_primitives::Hash;
+use abc_primitives::parachain::{Id as ParaId, BlockData, Extrinsic};
 use log::warn;
 
 use std::collections::HashSet;

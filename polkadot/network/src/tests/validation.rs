@@ -23,12 +23,12 @@ use crate::gossip::GossipMessage;
 use substrate_network::Context as NetContext;
 use substrate_network::consensus_gossip::TopicNotification;
 use substrate_primitives::{NativeOrEncoded, ExecutionContext};
-use substrate_keyring::AuthorityKeyring;
+use substrate_keyring::Ed25519Keyring;
 use crate::PolkadotProtocol;
 
-use polkadot_validation::{SharedTable, MessagesFrom, Network};
-use polkadot_primitives::{SessionKey, Block, Hash, Header, BlockId};
-use polkadot_primitives::parachain::{
+use abc_validation::{SharedTable, MessagesFrom, Network};
+use abc_primitives::{SessionKey, Block, Hash, Header, BlockId};
+use abc_primitives::parachain::{
 	Id as ParaId, Chain, DutyRoster, ParachainHost, OutgoingMessage,
 	ValidatorId, StructuredUnroutedIngress, BlockIngressRoots, Status,
 	FeeSchedule, HeadData,
@@ -388,7 +388,7 @@ impl IngressBuilder {
 		let mut map = HashMap::new();
 		for ((source, target), messages) in self.egress {
 			map.entry(target).or_insert_with(Vec::new)
-				.push((source, polkadot_validation::message_queue_root(&messages)));
+				.push((source, abc_validation::message_queue_root(&messages)));
 		}
 
 		for roots in map.values_mut() {
@@ -399,11 +399,11 @@ impl IngressBuilder {
 	}
 }
 
-fn make_table(data: &ApiData, local_key: &AuthorityKeyring, parent_hash: Hash) -> Arc<SharedTable> {
-	use ::av_store::Store;
+fn make_table(data: &ApiData, local_key: &Ed25519Keyring, parent_hash: Hash) -> Arc<SharedTable> {
+	use av_store::Store;
 
 	let store = Store::new_in_memory();
-	let (group_info, _) = ::polkadot_validation::make_group_info(
+	let (group_info, _) = ::abc_validation::make_group_info(
 		DutyRoster { validator_duty: data.duties.clone() },
 		&data.validators, // only possible as long as parachain crypto === aura crypto
 		SessionKey::from(*local_key)

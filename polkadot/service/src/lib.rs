@@ -22,9 +22,10 @@ use client::LongestChain;
 use consensus_common::SelectChain;
 use std::sync::Arc;
 use std::time::Duration;
-use polkadot_primitives::{parachain, Block, Hash, BlockId, AuraPair};
-use polkadot_runtime::{GenesisConfig, RuntimeApi};
-use polkadot_network::gossip::{self as network_gossip, Known};
+use grandpa_primitives::AuthorityPair as GrandpaPair;
+use abc_primitives::{parachain, Block, Hash, BlockId, AuraPair};
+use abc_runtime::{GenesisConfig, RuntimeApi};
+use abc_network::gossip::{self as network_gossip, Known};
 use primitives::{ed25519, Pair};
 use service::{FactoryFullConfiguration, FullBackend, LightBackend, FullExecutor, LightExecutor};
 use transaction_pool::txpool::{Pool as TransactionPool};
@@ -38,8 +39,8 @@ pub use service::{
 };
 pub use service::config::full_version_from_strs;
 pub use client::{backend::Backend, runtime_api::Core as CoreApi, ExecutionStrategy};
-pub use polkadot_network::{PolkadotProtocol, NetworkService};
-pub use polkadot_primitives::parachain::{CollatorId, ParachainHost};
+pub use abc_network::{PolkadotProtocol, NetworkService};
+pub use abc_primitives::parachain::{CollatorId, ParachainHost};
 pub use primitives::Blake2Hasher;
 pub use sr_primitives::traits::ProvideRuntimeApi;
 pub use chain_spec::ChainSpec;
@@ -149,11 +150,13 @@ impl PolkadotService for Service<LightComponents<Factory>> {
 service::construct_service_factory! {
 	struct Factory {
 		Block = Block,
+		ConsensusPair = AuraPair,
+		FinalityPair = GrandpaPair,
 		RuntimeApi = RuntimeApi,
 		NetworkProtocol = PolkadotProtocol {
 			|config: &Configuration| Ok(PolkadotProtocol::new(config.custom.collating_for.clone()))
 		},
-		RuntimeDispatch = polkadot_executor::Executor,
+		RuntimeDispatch = abc_executor::Executor,
 		FullTransactionPoolApi = TxChainApi<FullBackend<Self>, FullExecutor<Self>>
 			{ |config, client| Ok(TransactionPool::new(config, TxChainApi::new(client))) },
 		LightTransactionPoolApi = TxChainApi<LightBackend<Self>, LightExecutor<Self>>
@@ -165,7 +168,7 @@ service::construct_service_factory! {
 				FullComponents::<Factory>::new(config)
 			} },
 		AuthoritySetup = { |mut service: Self::FullService| {
-				use polkadot_network::validation::ValidationNetwork;
+				use abc_network::validation::ValidationNetwork;
 
 				let (block_import, link_half) = service.config.custom.grandpa_import_setup.take()
 					.expect("Link Half and Block Import are present for Full Services or setup failed before. qed");
@@ -175,7 +178,7 @@ service::construct_service_factory! {
 					let grandpa_key = if service.config.disable_grandpa {
 						None
 					} else {
-						service.authority_key::<grandpa_primitives::AuthorityPair>()
+						service.authority_key()
 					};
 
 					let config = grandpa::Config {
@@ -228,7 +231,7 @@ service::construct_service_factory! {
 				};
 
 				// run authorship only if authority.
-				let aura_key = match service.authority_key::<AuraPair>()  {
+				let aura_key = match service.authority_key()  {
 					Some(key) => Arc::new(key),
 					None => return Ok(service),
 				};
@@ -278,7 +281,7 @@ service::construct_service_factory! {
 					service.on_exit(),
 					gossip_validator,
 					service.client(),
-					polkadot_network::validation::WrappedExecutor(service.spawn_task_handle()),
+					abc_network::validation::WrappedExecutor(service.spawn_task_handle()),
 				);
 				let proposer_factory = consensus::ProposerFactory::new(
 					client.clone(),

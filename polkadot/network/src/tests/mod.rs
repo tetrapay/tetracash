@@ -20,9 +20,9 @@ use std::collections::HashMap;
 use super::{PolkadotProtocol, Status, Message, FullStatus};
 use crate::validation::SessionParams;
 
-use polkadot_validation::GenericStatement;
-use polkadot_primitives::{Block, Hash, SessionKey};
-use polkadot_primitives::parachain::{
+use abc_validation::GenericStatement;
+use abc_primitives::{Block, Hash, SessionKey};
+use abc_primitives::parachain::{
 	CandidateReceipt, HeadData, PoVBlock, BlockData, CollatorId, ValidatorId,
 	StructuredUnroutedIngress,
 };
@@ -80,7 +80,7 @@ impl TestContext {
 fn make_pov(block_data: Vec<u8>) -> PoVBlock {
 	PoVBlock {
 		block_data: BlockData(block_data),
-		ingress: polkadot_primitives::parachain::ConsolidatedIngress(Vec::new()),
+		ingress: abc_primitives::parachain::ConsolidatedIngress(Vec::new()),
 	}
 }
 

@@ -24,11 +24,11 @@
 //! and dispatch evaluation work as necessary when new statements come in.
 
 use sr_primitives::traits::{ProvideRuntimeApi, BlakeTwo256, Hash as HashT};
-use polkadot_validation::{
+use abc_validation::{
 	SharedTable, TableRouter, SignedStatement, GenericStatement, ParachainWork, Validated
 };
-use polkadot_primitives::{Block, Hash};
-use polkadot_primitives::parachain::{
+use abc_primitives::{Block, Hash};
+use abc_primitives::parachain::{
 	Extrinsic, CandidateReceipt, ParachainHost, ValidatorIndex, Collation, PoVBlock,
 };
 use crate::gossip::{RegisteredMessageValidator, GossipMessage, GossipStatement};

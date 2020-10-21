@@ -17,8 +17,8 @@
 //! Bridge between the network and consensus service for getting collations to it.
 
 use parity_codec::{Encode, Decode};
-use polkadot_primitives::Hash;
-use polkadot_primitives::parachain::{CollatorId, Id as ParaId, Collation};
+use abc_primitives::Hash;
+use abc_primitives::parachain::{CollatorId, Id as ParaId, Collation};
 use substrate_network::PeerId;
 use futures::sync::oneshot;
 
@@ -227,7 +227,7 @@ impl CollatorPool {
 mod tests {
 	use super::*;
 	use substrate_primitives::crypto::UncheckedInto;
-	use polkadot_primitives::parachain::{
+	use abc_primitives::parachain::{
 		CandidateReceipt, BlockData, PoVBlock, HeadData, ConsolidatedIngress,
 	};
 	use futures::Future;

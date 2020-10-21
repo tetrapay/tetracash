@@ -22,8 +22,8 @@ use std::sync::Arc;
 
 use extrinsic_store::{Data, Store as ExtrinsicStore};
 use table::{self, Table, Context as TableContextTrait};
-use polkadot_primitives::{Block, BlockId, Hash, SessionKey};
-use polkadot_primitives::parachain::{Id as ParaId, Collation, Extrinsic, CandidateReceipt,
+use abc_primitives::{Block, BlockId, Hash, SessionKey};
+use abc_primitives::parachain::{Id as ParaId, Collation, Extrinsic, CandidateReceipt,
 	AttestedCandidate, ParachainHost, PoVBlock, ValidatorIndex,
 };
 
@@ -512,7 +512,7 @@ impl SharedTable {
 	/// Get a set of candidates that can be proposed.
 	pub fn proposed_set(&self) -> Vec<AttestedCandidate> {
 		use table::generic::{ValidityAttestation as GAttestation};
-		use polkadot_primitives::parachain::ValidityAttestation;
+		use abc_primitives::parachain::ValidityAttestation;
 
 		// we transform the types of the attestations gathered from the table
 		// into the type expected by the runtime. This may do signature
@@ -571,9 +571,9 @@ impl SharedTable {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use substrate_keyring::AuthorityKeyring;
+	use substrate_keyring::Ed25519Keyring;
 	use primitives::crypto::UncheckedInto;
-	use polkadot_primitives::parachain::{BlockData, ConsolidatedIngress};
+	use abc_primitives::parachain::{BlockData, ConsolidatedIngress};
 	use futures::future;
 
 	fn pov_block_with_data(data: Vec<u8>) -> PoVBlock {
@@ -604,10 +604,10 @@ mod tests {
 		let para_id = ParaId::from(1);
 		let parent_hash = Default::default();
 
-		let local_key = Arc::new(AuthorityKeyring::Alice.pair());
+		let local_key = Arc::new(Ed25519Keyring::Alice.pair());
 		let local_id = local_key.public();
 
-		let validity_other_key = AuthorityKeyring::Bob.pair();
+		let validity_other_key = Ed25519Keyring::Bob.pair();
 		let validity_other = validity_other_key.public();
 		let validity_other_index = 1;
 
@@ -629,7 +629,7 @@ mod tests {
 			parachain_index: para_id,
 			collator: [1; 32].unchecked_into(),
 			signature: Default::default(),
-			head_data: ::polkadot_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
+			head_data: ::abc_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
 			egress_queue_roots: Vec::new(),
 			fees: 1_000_000,
 			block_data_hash: [2; 32].into(),
@@ -658,10 +658,10 @@ mod tests {
 		let para_id = ParaId::from(1);
 		let parent_hash = Default::default();
 
-		let local_key = Arc::new(AuthorityKeyring::Alice.pair());
+		let local_key = Arc::new(Ed25519Keyring::Alice.pair());
 		let local_id = local_key.public();
 
-		let validity_other_key = AuthorityKeyring::Bob.pair();
+		let validity_other_key = Ed25519Keyring::Bob.pair();
 		let validity_other = validity_other_key.public();
 		let validity_other_index = 1;
 
@@ -683,7 +683,7 @@ mod tests {
 			parachain_index: para_id,
 			collator: [1; 32].unchecked_into(),
 			signature: Default::default(),
-			head_data: ::polkadot_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
+			head_data: ::abc_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
 			egress_queue_roots: Vec::new(),
 			fees: 1_000_000,
 			block_data_hash: [2; 32].into(),
@@ -716,7 +716,7 @@ mod tests {
 			parachain_index: para_id,
 			collator: [1; 32].unchecked_into(),
 			signature: Default::default(),
-			head_data: ::polkadot_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
+			head_data: ::abc_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
 			egress_queue_roots: Vec::new(),
 			fees: 1_000_000,
 			block_data_hash: [2; 32].into(),
@@ -757,7 +757,7 @@ mod tests {
 			parachain_index: para_id,
 			collator: [1; 32].unchecked_into(),
 			signature: Default::default(),
-			head_data: ::polkadot_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
+			head_data: ::abc_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
 			egress_queue_roots: Vec::new(),
 			fees: 1_000_000,
 			block_data_hash: [2; 32].into(),
@@ -793,10 +793,10 @@ mod tests {
 		let para_id = ParaId::from(1);
 		let parent_hash = Default::default();
 
-		let local_key = Arc::new(AuthorityKeyring::Alice.pair());
+		let local_key = Arc::new(Ed25519Keyring::Alice.pair());
 		let local_id = local_key.public();
 
-		let validity_other_key = AuthorityKeyring::Bob.pair();
+		let validity_other_key = Ed25519Keyring::Bob.pair();
 		let validity_other = validity_other_key.public();
 		let validity_other_index = 1;
 
@@ -818,7 +818,7 @@ mod tests {
 			parachain_index: para_id,
 			collator: [1; 32].unchecked_into(),
 			signature: Default::default(),
-			head_data: ::polkadot_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
+			head_data: ::abc_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
 			egress_queue_roots: Vec::new(),
 			fees: 1_000_000,
 			block_data_hash: [2; 32].into(),
@@ -859,10 +859,10 @@ mod tests {
 		let extrinsic = Extrinsic { outgoing_messages: Vec::new() };
 		let parent_hash = Default::default();
 
-		let local_key = Arc::new(AuthorityKeyring::Alice.pair());
+		let local_key = Arc::new(Ed25519Keyring::Alice.pair());
 		let local_id = local_key.public();
 
-		let validity_other_key = AuthorityKeyring::Bob.pair();
+		let validity_other_key = Ed25519Keyring::Bob.pair();
 		let validity_other = validity_other_key.public();
 
 		groups.insert(para_id, GroupInfo {
@@ -883,7 +883,7 @@ mod tests {
 			parachain_index: para_id,
 			collator: [1; 32].unchecked_into(),
 			signature: Default::default(),
-			head_data: ::polkadot_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
+			head_data: ::abc_primitives::parachain::HeadData(vec![1, 2, 3, 4]),
 			egress_queue_roots: Vec::new(),
 			fees: 1_000_000,
 			block_data_hash: [2; 32].into(),
@@ -911,18 +911,18 @@ mod tests {
 	fn index_mapping_from_authorities() {
 		let authorities_set: &[&[_]] = &[
 			&[],
-			&[AuthorityKeyring::Alice.pair().public()],
-			&[AuthorityKeyring::Alice.pair().public(), AuthorityKeyring::Bob.pair().public()],
-			&[AuthorityKeyring::Bob.pair().public(), AuthorityKeyring::Alice.pair().public()],
-			&[AuthorityKeyring::Alice.pair().public(), AuthorityKeyring::Bob.pair().public(), AuthorityKeyring::Charlie.pair().public()],
-			&[AuthorityKeyring::Charlie.pair().public(), AuthorityKeyring::Bob.pair().public(), AuthorityKeyring::Alice.pair().public()],
+			&[Ed25519Keyring::Alice.pair().public()],
+			&[Ed25519Keyring::Alice.pair().public(), Ed25519Keyring::Bob.pair().public()],
+			&[Ed25519Keyring::Bob.pair().public(), Ed25519Keyring::Alice.pair().public()],
+			&[Ed25519Keyring::Alice.pair().public(), Ed25519Keyring::Bob.pair().public(), Ed25519Keyring::Charlie.pair().public()],
+			&[Ed25519Keyring::Charlie.pair().public(), Ed25519Keyring::Bob.pair().public(), Ed25519Keyring::Alice.pair().public()],
 		];
 
 		for authorities in authorities_set {
 			let shared_table = SharedTable::new(
 				authorities,
 				HashMap::new(),
-				Arc::new(AuthorityKeyring::Alice.pair()),
+				Arc::new(Ed25519Keyring::Alice.pair()),
 				Default::default(),
 				ExtrinsicStore::new_in_memory(),
 				None,

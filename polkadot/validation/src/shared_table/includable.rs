@@ -21,7 +21,7 @@ use std::collections::HashMap;
 use futures::prelude::*;
 use futures::sync::oneshot;
 
-use polkadot_primitives::Hash;
+use abc_primitives::Hash;
 
 /// Track includability of a set of candidates,
 pub(super) fn track<I: IntoIterator<Item=(Hash, bool)>>(candidates: I) -> (IncludabilitySender, Includable) {

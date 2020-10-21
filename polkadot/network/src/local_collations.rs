@@ -19,7 +19,7 @@
 //! Collations are attempted to be repropagated when a new validator connects,
 //! a validator changes his session key, or when they are generated.
 
-use polkadot_primitives::{Hash, SessionKey};
+use abc_primitives::{Hash, SessionKey};
 
 use crate::collator_pool::Role;
 
@@ -131,7 +131,7 @@ impl<C: Clone> LocalCollations<C> {
 mod tests {
 	use super::*;
 	use substrate_primitives::crypto::UncheckedInto;
-	use polkadot_primitives::parachain::ValidatorId;
+	use abc_primitives::parachain::ValidatorId;
 
 	#[test]
 	fn add_validator_with_ready_collation() {

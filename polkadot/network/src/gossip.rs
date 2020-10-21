@@ -21,8 +21,8 @@ use substrate_network::consensus_gossip::{
 	self as network_gossip, ValidationResult as GossipValidationResult,
 	ValidatorContext, MessageIntent, ConsensusMessage,
 };
-use polkadot_validation::{GenericStatement, SignedStatement};
-use polkadot_primitives::{Block, Hash, SessionKey, parachain::ValidatorIndex};
+use abc_validation::{GenericStatement, SignedStatement};
+use abc_primitives::{Block, Hash, SessionKey, parachain::ValidatorIndex};
 use parity_codec::{Decode, Encode};
 
 use std::collections::{HashMap, HashSet};
@@ -231,7 +231,7 @@ impl MessageValidationData {
 		};
 
 		let good = self.authorities.contains(&sender) &&
-			::polkadot_validation::check_statement(
+			::abc_validation::check_statement(
 				&statement.statement,
 				&statement.signature,
 				sender.clone(),
@@ -571,7 +571,7 @@ mod tests {
 	use substrate_network::consensus_gossip::Validator as ValidatorT;
 	use std::sync::mpsc;
 	use parking_lot::Mutex;
-	use polkadot_primitives::parachain::{CandidateReceipt, HeadData};
+	use abc_primitives::parachain::{CandidateReceipt, HeadData};
 	use substrate_primitives::crypto::UncheckedInto;
 	use substrate_primitives::ed25519::Signature as Ed25519Signature;
 

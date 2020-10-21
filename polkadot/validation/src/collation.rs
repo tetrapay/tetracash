@@ -21,7 +21,7 @@
 
 use std::sync::Arc;
 
-use polkadot_primitives::{Block, Hash, BlockId, Balance, parachain::{
+use abc_primitives::{Block, Hash, BlockId, Balance, parachain::{
 	CollatorId, ConsolidatedIngress, StructuredUnroutedIngress, CandidateReceipt, ParachainHost,
 	Id as ParaId, Collation, Extrinsic, OutgoingMessage, UpwardMessage, FeeSchedule,
 }};
@@ -454,7 +454,7 @@ mod tests {
 	use super::*;
 	use parachain::wasm_executor::Externalities as ExternalitiesTrait;
 	use parachain::ParachainDispatchOrigin;
-	use polkadot_primitives::parachain::{CandidateReceipt, HeadData};
+	use abc_primitives::parachain::{CandidateReceipt, HeadData};
 
 	#[test]
 	fn compute_and_check_egress() {

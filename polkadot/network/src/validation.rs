@@ -16,7 +16,7 @@
 
 //! The "validation session" networking code built on top of the base network service.
 //!
-//! This fulfills the `polkadot_validation::Network` trait, providing a hook to be called
+//! This fulfills the `abc_validation::Network` trait, providing a hook to be called
 //! each time a validation session begins on a new chain head.
 
 use crate::gossip::GossipMessage;
@@ -25,11 +25,11 @@ use substrate_network::{PeerId, Context as NetContext};
 use substrate_network::consensus_gossip::{
 	self, TopicNotification, MessageRecipient as GossipMessageRecipient, ConsensusMessage,
 };
-use polkadot_validation::{
+use abc_validation::{
 	Network as ParachainNetwork, SharedTable, Collators, Statement, GenericStatement, SignedStatement,
 };
-use polkadot_primitives::{Block, BlockId, Hash, SessionKey};
-use polkadot_primitives::parachain::{
+use abc_primitives::{Block, BlockId, Hash, SessionKey};
+use abc_primitives::parachain::{
 	Id as ParaId, Collation, Extrinsic, ParachainHost, CandidateReceipt, CollatorId,
 	ValidatorId, PoVBlock, ValidatorIndex,
 };
@@ -52,7 +52,7 @@ use crate::gossip::{POLKADOT_ENGINE_ID, RegisteredMessageValidator, MessageValid
 
 use super::PolkadotProtocol;
 
-pub use polkadot_validation::Incoming;
+pub use abc_validation::Incoming;
 
 use parity_codec::{Encode, Decode};
 
